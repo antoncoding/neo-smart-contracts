@@ -1,31 +1,16 @@
-from boa.interop.Neo.Storage import Get,Put,Delete,GetContext
-
-def Main(operation, addr, value):
-
-
-    if not is_valid_addr(addr):
-        return False
-
-    ctx = GetContext()
+def Main(operation, a, b):
 
     if operation == 'add':
-        balance = Get(ctx, addr)
-        new_balance = balance + value
-        Put(ctx, addr, new_balance)
-        return new_balance
+        return a + b
 
-    elif operation == 'remove':
-        balance = Get(ctx, addr)
-        Put(ctx, addr, balance - value)
-        return balance - value
+    elif operation == 'sub':
+        return a - b
 
-    elif operation == 'balance':
-        return Get(ctx, addr)
+    elif operation == 'mul':
+        return a * b
 
-    return False
+    elif operation == 'div':
+        return a / b
 
-def is_valid_addr(addr):
-
-    if len(addr) == 20:
-        return True
-    return False
+    else:
+        return -1
