@@ -23,3 +23,9 @@ neo> build {path}/smart-contracts/sample2.py test 070202 02 False False add 1 2
 ```
 neo> build {path}/smart-contracts/sample3.py test 070502 02 True False add AG4GfwjnvydAZodm4xEDivguCtjCFzLcJy 3
 ```
+
+* Sample: Timestamp
+```
+build {path}/smart-contracts/sample-timestamp.py test 02 02 True True
+return: Current Linux TimeStamp
+```

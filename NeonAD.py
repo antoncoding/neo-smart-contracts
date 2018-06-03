@@ -22,9 +22,11 @@ def Main(operation, args):
     # Common definitions
     user_hash = args[0]
     domain = args[1]
-    domain_owner_key = concat(domain, ".owner")
-    domain_target_key = concat(domain, ".target")
-    owner = b'#\xba\'\x03\xc52c\xe8\xd6\xe5"\xdc2 39\xdc\xd8\xee\xe9'
+    # domain_owner_key = concat(domain, ".owner")
+    # domain_target_key = concat(domain, ".target")
+    # owner = b'#\xba\'\x03\xc52c\xe8\xd6\xe5"\xdc2 39\xdc\xd8\xee\xe9'
+
+
 
     # This doesn't require authentication
     if operation == 'GetDomain':
