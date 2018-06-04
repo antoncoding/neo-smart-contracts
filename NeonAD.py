@@ -1,11 +1,11 @@
 from boa.interop.Neo.Runtime import CheckWitness, Log
 from boa.interop.Neo.Storage import GetContext, Put, Delete, Get
-from boa.builtins import concat
-
 from boa.interop.Neo.Blockchain import GetHeader, GetHeight
 from boa.interop.Neo.Header import GetTimestamp
-
+from boa.builtins import concat
 from NeonAdUtil import *
+
+ctx = GetContext()
 
 def get_current_timestamp():
     current_height = GetHeight()
@@ -16,7 +16,7 @@ def get_current_timestamp():
 
 def get_ad_count():
     ad_count_key = "NeonAD.count"
-    ad_registered = Get(GetContext(), ad_count_key)
+    ad_registered = Get(ctx, ad_count_key)
     if ad_registered != None:
         return ad_registered
     return 0
@@ -24,7 +24,7 @@ def get_ad_count():
 
 def get_default_content():
     default_content_key = "NeonAD.default"
-    default_content = Get(GetContext(), default_content_key)
+    default_content = Get(ctx, default_content_key)
     return default_content
 
 
@@ -37,23 +37,24 @@ def update_board_round(board_id):
     highest_bid_key = get_highest_bid_key(board_id)
     next_content_key = get_next_content_key(board_id)
 
-    period = Get(GetContext(), get_period_key(board_id))
+    period = Get(ctx, get_period_key(board_id))
     current_timestamp = get_current_timestamp()
     round_end = current_timestamp + period
 
     # update Info
-    Put(GetContext(), endtime_key, round_end)
+    Put(ctx, endtime_key, round_end)
 
-    new_owner = Get(GetContext(), highest_bidder_key)
-    Put(GetContext(), owner_key, new_owner)
+    new_owner = Get(ctx, highest_bidder_key)
+    Put(ctx, owner_key, new_owner)
 
-    new_content = Get(GetContext(), next_content_key)
-    Put(GetContext(), content_key, new_content)
+    new_content = Get(ctx, next_content_key)
+    Put(ctx, content_key, new_content)
 
-    Put(GetContext(), highest_bid_key, 0)
+    Put(ctx, highest_bid_key, 0)
 
     print('Update Round Completed')
     return True
+
 
 def init_board_info(board_id, creator, period, domain_name):
     # Define All the keys we need for a single board
@@ -61,9 +62,9 @@ def init_board_info(board_id, creator, period, domain_name):
     ad_admin_key = get_ad_admin_key(board_id)
     domain_name_key = get_domain_key(board_id)
 
-    Put(GetContext(), period_key, period)
-    Put(GetContext(), ad_admin_key, creator)
-    Put(GetContext(), domain_name_key, domain_name)
+    Put(ctx, period_key, period)
+    Put(ctx, ad_admin_key, creator)
+    Put(ctx, domain_name_key, domain_name)
 
     # Records for next Round
     highest_bid_key = get_highest_bid_key(board_id)
@@ -71,18 +72,17 @@ def init_board_info(board_id, creator, period, domain_name):
     next_content_key = get_next_content_key(board_id)
 
     # Next Round
-    Put(GetContext(), highest_bid_key, 0)
-    Put(GetContext(), highest_bidder_key, creator)
+    Put(ctx, highest_bid_key, 0)
+    Put(ctx, highest_bidder_key, creator)
     default_content = get_default_content()
-    Put(GetContext(), next_content_key, default_content)
-
+    Put(ctx, next_content_key, default_content)
     return True
 
 
 def check_expired(board_id):
     current_timestamp = get_current_timestamp()
     board_end_key = get_endtime_key(board_id)
-    board_end_timestamp = Get(GetContext(), board_end_key)
+    board_end_timestamp = Get(ctx, board_end_key)
     if board_end_timestamp > current_timestamp:
         return False
     return True
@@ -94,15 +94,15 @@ def bid_for_board(board_id, bidder, bid, content):
         return False
 
     highest_bid_key = get_highest_bid_key(board_id)
-    highest_bid = Get(GetContext(), highest_bid_key)
+    highest_bid = Get(ctx, highest_bid_key)
     if bid > highest_bid:
         highest_bidder_key = get_highest_bidder_key(board_id)
-        Put(GetContext(), highest_bidder_key, bidder)
+        Put(ctx, highest_bidder_key, bidder)
 
-        Put(GetContext(), highest_bid_key, bid)
+        Put(ctx, highest_bid_key, bid)
 
         next_content_key = get_next_content_key(board_id)
-        Put(GetContext(), next_content_key, content)
+        Put(ctx, next_content_key, content)
         return True
 
     else:
@@ -123,8 +123,7 @@ def Main(operation, args):
 
     if operation == "GetEndTime":
         board_id = args[1]
-        return Get(GetContext(), concat(board_id, ".endtime"))
-
+        return Get(ctx, get_endtime_key(board_id))
 
     # # Everything after this requires authorization
     authorized = CheckWitness(user_hash)
@@ -142,7 +141,7 @@ def Main(operation, args):
 
         ad_count = get_ad_count() + 1
         board_id = concat("NeonAD", ad_count)
-        Put(GetContext(), "NeonAD.count", ad_count)
+        Put(ctx, "NeonAD.count", ad_count)
 
         init_sucess = init_board_info(board_id, user_hash, period, domain_name)
         update_success = update_board_round(board_id)
@@ -175,7 +174,7 @@ def Main(operation, args):
     elif operation == "SetDefaultContent":
         if CheckWitness(contract_owner):
             ad_content = args[1]
-            Put(GetContext(), "NeonAD.default", ad_content)
+            Put(ctx, "NeonAD.default", ad_content)
             return ad_content
         else:
             print('This Function can only be triggered by admin')
