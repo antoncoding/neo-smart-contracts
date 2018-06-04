@@ -25,23 +25,41 @@ def init_board_info(board_id, creator, period, domain_name):
     highest_actual_bid_key = concat(board_id, ".real")
     highest_mask_bid_key = concat(board_id, ".mask")
     period_key = concat(board_id, ".period")
-    endtime_key = concat(board_id, ".endtime")
     ad_owner_key = concat(board_id, ".owner")
-    highest_bidder_key = concat(board_id, ".bidder")
+    ad_bidder_key = concat(board_id, ".bidder")
     domain_name_key = concat(board_id, ".domain")
+    content_key = concat(board_id, ".content")
+
+    # Records for next Round
+    endtime_key = concat(board_id, ".endtime")
+    next_bidder_key = concat(board_id, ".bidder.next")
+    next_content_key = concat(board_id, ".content.next")
 
     current_timestamp = get_current_timestamp()
     first_round_end = current_timestamp + period
 
-    Put(GetContext(), highest_actual_bid_key, 0)
-    Put(GetContext(), highest_mask_bid_key, 0)
     Put(GetContext(), period_key, period)
     Put(GetContext(), endtime_key, first_round_end)
     Put(GetContext(), ad_owner_key, creator)
-    Put(GetContext(), highest_bidder_key, creator)
+    Put(GetContext(), ad_bidder_key, creator)
     Put(GetContext(), domain_name_key, domain_name)
-
+    Put(GetContext(), content_key, '')
+    # Next Round
+    Put(GetContext(), highest_actual_bid_key, 0)
+    Put(GetContext(), highest_mask_bid_key, 0)
+    Put(GetContext(), next_bidder_key, creator)
+    Put(GetContext(), next_content_key, '')
     return True
+
+
+
+
+
+def check_validat(board_id):
+    current_timestamp = get_current_timestamp
+    board_end_key = concat(board_id, ".endtime")
+    board_end_timestap = Get(GetContext(), board_end_key)
+
 
 def Main(operation, args):
     """
@@ -58,12 +76,15 @@ def Main(operation, args):
         byterarray: The result of the operation
     """
     user_hash = args[0]
-    # domain_owner_key = concat(domain, ".owner")
-    # domain_target_key = concat(domain, ".target")
+
+    if operation == "GetEndTime":
+        board_id = args[1]
+        return Get(GetContext(), concat(board_id, ".endtime"))
+
+
     # # Everything after this requires authorization
     authorized = CheckWitness(user_hash)
     if not authorized:
-        Log("Not Authorized")
         return False
     Log("Authorized")
 
@@ -83,9 +104,7 @@ def Main(operation, args):
 
         success = init_board_info(board_id, user_hash, period, domain_name)
 
-        return Get(GetContext(), concat(board_id, ".endtime"))
-
-
+        return board_id
 
     # This doesn't require authentication
     # if operation == 'GetDomain':
