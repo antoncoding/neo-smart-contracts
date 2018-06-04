@@ -53,7 +53,7 @@ def update_board_round(board_id):
     Put(GetContext(), highest_bid_key, 0)
 
     print('Update Round Completed')
-
+    return True
 
 def init_board_info(board_id, creator, period, domain_name):
     # Define All the keys we need for a single board
@@ -76,6 +76,7 @@ def init_board_info(board_id, creator, period, domain_name):
     default_content = get_default_content()
     Put(GetContext(), next_content_key, default_content)
 
+    return True
 
 
 def check_expired(board_id):
@@ -143,8 +144,8 @@ def Main(operation, args):
         board_id = concat("NeonAD", ad_count)
         Put(GetContext(), "NeonAD.count", ad_count)
 
-        init_board_info(board_id, user_hash, period, domain_name)
-        update_board_round(board_id)
+        init_sucess = init_board_info(board_id, user_hash, period, domain_name)
+        update_success = update_board_round(board_id)
 
         return board_id
 
