@@ -1,3 +1,5 @@
 boa
 .idea/
-
+__pycache__/
+sample-list.debug.json
+sample-list.avm
