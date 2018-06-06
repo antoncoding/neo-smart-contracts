@@ -1,0 +1,165 @@
+{
+    "avm": {
+        "name": "sample-storage",
+        "hash": "77397cefe4f8fb769af1ce6b571a1ee9"
+    },
+    "compiler": {
+        "name": "neo-boa",
+        "version": "0.4.4"
+    },
+    "files": [
+        {
+            "id": 1,
+            "url": "/home/anton/Programming/neo-developer/smart-contracts/sample-storage.py"
+        },
+        {
+            "id": 2,
+            "url": "/home/anton/Programming/neo-developer/neo-python/venv/lib/python3.6/site-packages/boa/builtins.py"
+        }
+    ],
+    "map": [
+        {
+            "start": 3,
+            "end": 42,
+            "file": 1,
+            "method": "Main",
+            "line": 2,
+            "file_line_no": 5
+        },
+        {
+            "start": 43,
+            "end": 60,
+            "file": 1,
+            "method": "Main",
+            "line": 3,
+            "file_line_no": 6
+        },
+        {
+            "start": 61,
+            "end": 112,
+            "file": 1,
+            "method": "Main",
+            "line": 5,
+            "file_line_no": 8
+        },
+        {
+            "start": 113,
+            "end": 118,
+            "file": 1,
+            "method": "Main",
+            "line": 6,
+            "file_line_no": 9
+        },
+        {
+            "start": 119,
+            "end": 125,
+            "file": 1,
+            "method": "Main",
+            "line": 7,
+            "file_line_no": 10
+        },
+        {
+            "start": 126,
+            "end": 136,
+            "file": 1,
+            "method": "Main",
+            "line": 9,
+            "file_line_no": 12
+        },
+        {
+            "start": 137,
+            "end": 187,
+            "file": 1,
+            "method": "Main",
+            "line": 10,
+            "file_line_no": 13
+        },
+        {
+            "start": 188,
+            "end": 206,
+            "file": 2,
+            "method": "range",
+            "line": 12,
+            "file_line_no": 85
+        },
+        {
+            "start": 207,
+            "end": 218,
+            "file": 2,
+            "method": "range",
+            "line": 9,
+            "file_line_no": 82
+        },
+        {
+            "start": 219,
+            "end": 227,
+            "file": 2,
+            "method": "range",
+            "line": 11,
+            "file_line_no": 84
+        },
+        {
+            "start": 228,
+            "end": 233,
+            "file": 2,
+            "method": "range",
+            "line": 13,
+            "file_line_no": 86
+        },
+        {
+            "start": 234,
+            "end": 241,
+            "file": 2,
+            "method": "range",
+            "line": 15,
+            "file_line_no": 88
+        },
+        {
+            "start": 242,
+            "end": 253,
+            "file": 2,
+            "method": "range",
+            "line": 17,
+            "file_line_no": 90
+        },
+        {
+            "start": 254,
+            "end": 265,
+            "file": 2,
+            "method": "range",
+            "line": 18,
+            "file_line_no": 91
+        },
+        {
+            "start": 266,
+            "end": 276,
+            "file": 2,
+            "method": "range",
+            "line": 19,
+            "file_line_no": 92
+        },
+        {
+            "start": 277,
+            "end": 286,
+            "file": 2,
+            "method": "range",
+            "line": 20,
+            "file_line_no": 93
+        },
+        {
+            "start": 287,
+            "end": 304,
+            "file": 2,
+            "method": "range",
+            "line": 21,
+            "file_line_no": 94
+        },
+        {
+            "start": 305,
+            "end": 310,
+            "file": 2,
+            "line": 23
+        }
+    ],
+    "breakpoints": []
+}
