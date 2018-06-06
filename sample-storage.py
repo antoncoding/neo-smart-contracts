@@ -12,4 +12,4 @@ def Main():
     new_balance = balance + 100
     Put(GetContext(), balance_key, new_balance)
 
-    return True
+    return new_balance
