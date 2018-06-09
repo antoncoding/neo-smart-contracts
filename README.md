@@ -32,11 +32,10 @@ build {path}/smart-contracts/sample-storage.py test 02 02 True True
 ```
 
 * Sample: List Operation
-
-With a samll function `remove_from_list`.
 ```
 build {path}/smart-contracts/sample-list.py test 02 02 True True 1
 ```
+  * With a samll function `remove_from_list`.
 
 
 * Sample: Timestamp
