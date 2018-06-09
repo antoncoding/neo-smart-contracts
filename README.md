@@ -29,8 +29,15 @@ neo> build {path}/smart-contracts/sample3.py test 070502 02 True False add AG4Gf
 * Sample: Storage
 ```
 build {path}/smart-contracts/sample-storage.py test 02 02 True True
-
 ```
+
+* Sample: List Operation
+
+With a samll function `remove_from_list`.
+```
+build {path}/smart-contracts/sample-list.py test 02 02 True True 1
+```
+
 
 * Sample: Timestamp
 ```
